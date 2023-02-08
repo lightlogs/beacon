@@ -3,9 +3,15 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/turbo124/collector.svg?style=flat-square)](https://packagist.org/packages/turbo124/collector)
 [![Total Downloads](https://img.shields.io/packagist/dt/turbo124/collector.svg?style=flat-square)](https://packagist.org/packages/turbo124/collector)
 
-This collector implements a native Laravel solution for collecting application statistics. Currently to enable this kind of functionality you would need to install Node and StatsD to your host and then begin piping your data. You'd then need to install a third party application to ingest the data and then display.
+This collector implements a native Laravel solution for collecting and sending application statistics. This client is designed to be paired with the Lightlogs collector package which can be installed on any Laravel 9+ installation to ingest the metrics.
 
-This client is designed to be paired with the Lightlogs collector package which can be installed on any Laravel 9+ installation to ingest the metrics.
+Why the need for a collector like this? Collecting application statistics can be very useful to understand how your application is working, detect any hot spots before they cause troubles and also understand how users are interacting (or abusing) your system. For instance you could create a metric to monitor HTTP requests received by your application and use this to manage your resources / provisioning of your infrastructure. This data can then be presented in a graphical display system such as Grafana which enables very detailed time series charts, see the example below:
+
+![grafana](https://user-images.githubusercontent.com/5827962/217438219-6f389ce7-f41c-49b7-8e0c-edbe85d94c60.png)
+
+It is highly recommended to send your metrics to a different endpoint than the one you are monitoring. In the case of an outage, you will be able to see what your application was doing just prior to the event. This could provide useful information that can guide you to the source of any issues.
+
+In our use case we pair [Grafana](https://grafana.com/) with [Timescale](https://www.timescale.com/) to store and present our data. 
 
 ## Installation
 
@@ -33,7 +39,6 @@ This package enables you to send several different metric types depending on wha
 ### Counter
 
 The default method to send metrics is to create a plain old PHP class (example for each type can be found in src/ExampleMetric), here is an example of a counter metric. 
-
 
 ```php
 namespace Lightlogs\Beacon\ExampleMetric;
