@@ -30,13 +30,15 @@ This package enables you to send several different metric types depending on wha
 
 ## Usage
 
-The default method to send metrics is to create a plain old PHP class (example for each type can be found in src/ExampleMetric), here is an example of a counter metric
+### Counter
+
+The default method to send metrics is to create a plain old PHP class (example for each type can be found in src/ExampleMetric), here is an example of a counter metric. 
 
 
 ```php
 namespace Lightlogs\Beacon\ExampleMetric;
 
-class GenericCounter
+class SpecialCounter extends GenericCounter
 {
     /**
      * The type of Sample
@@ -111,8 +113,88 @@ LightLogs::create(new GenericCounter())
 
 Included in this package is a range of system metric collectors these can be enabled or disabled by modifying the system_logging array in config/beacon.php 
 
-## Usage outside of Lightlogs collector
+### Mixed Metrics
 
+In the next example we'll be collecting metrics on visitors to our API, we'll use the MixedMetrics collector type to capture a range of data using a custom class like this:
+
+```php
+namespace App\Beacon;
+
+use Lightlogs\Beacon\ExampleMetric\GenericMixedMetric;
+
+class DbQuery extends GenericMixedMetric
+{
+    /**
+     * The type of Sample.
+     *
+     * @var string
+     */
+    public $type = 'mixed_metric';
+
+    /**
+     * The name of the metric.
+     * @var string
+     */
+    public $name = 'db.queries';
+
+    /**
+     * The datetime of the metric measurement.
+     *
+     * date("Y-m-d H:i:s")
+     *
+     * @var DateTime
+     */
+    public $datetime;
+
+    /**  
+     * @var string
+     */
+    public $string_metric5 = 'method';
+
+    /**  
+     * @var string
+     */
+    public $string_metric6 = 'url';
+
+    /**  
+     * @var string
+     */
+    public $string_metric7 = 'ip_address';
+
+    /**
+     * @var int
+     */
+    public $int_metric1 = 1;
+
+    /**
+     * @var int
+     */
+    public $double_metric2 = 1;
+
+    public function __construct($string_metric5, $string_metric6, $int_metric1, $double_metric2, $string_metric7)
+    {
+        $this->string_metric5 = $string_metric5;
+        $this->string_metric6 = $string_metric6;
+        $this->int_metric1 = $int_metric1;
+        $this->double_metric2 = $double_metric2;
+        $this->string_metric7 = $string_metric7;
+    }
+}
+
+```
+
+Within your application where you will be capturing this data, you would construct your collector like this:
+
+```php
+LightLogs::create(new DbQuery($request_method, 
+                              $url, 
+                              $count, 
+                              $request_duration, 
+                              $ip_address))
+                            ->batch();
+```
+
+## Usage outside of Lightlogs collector
 
 It is possible to use this package with your own custom endpoint for consuming metrics, the URI path that is constructed follows this pattern
 
