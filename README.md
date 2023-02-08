@@ -33,7 +33,7 @@ This package enables you to send several different metric types depending on wha
 The default method to send metrics is to create a plain old PHP class (example for each type can be found in src/ExampleMetric), here is an example of a counter metric
 
 
-```
+```php
 namespace Lightlogs\Beacon\ExampleMetric;
 
 class GenericCounter
