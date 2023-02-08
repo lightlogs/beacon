@@ -20,7 +20,7 @@ class ForceSend extends Command
 
     protected $log = '';
 
-    public function handle()
+    public function handle(): void
     {
         $this->logMessage('Sending Data');
 

@@ -9,7 +9,7 @@ class GenericCounter
      *
      * Monotonically incrementing counter
      *
-     *     - counter
+     * - counter
      *
      * @var string
      */

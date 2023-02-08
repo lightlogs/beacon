@@ -21,7 +21,7 @@ class PurgeAnalytics extends Command
 
     protected $log = '';
 
-    public function handle()
+    public function handle(): void
     {
         $this->logMessage('Purging Data');
 
@@ -36,7 +36,7 @@ class PurgeAnalytics extends Command
         $this->logMessage('Finished Purging Data');
     }
 
-    private function logMessage($str)
+    private function logMessage(string $str)
     {
         $str = date('Y-m-d h:i:s') . ' ' . $str;
         $this->info($str);

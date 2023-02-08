@@ -14,7 +14,7 @@ class Generator
      * @param  string $uri The collector type
      * @return string      The full URL
      */
-    private function endPoint($uri)
+    private function endPoint(string $uri): string
     {
         return config('beacon.endpoint') . "/{$uri}/batch";
     }
@@ -29,7 +29,7 @@ class Generator
      *
      * @return string The alpha numeric string used to communicate with the API
      */
-    private function apiKey()
+    private function apiKey(): string
     {
         return config('beacon.api_key');
     }
@@ -39,7 +39,7 @@ class Generator
      *
      * @return Client The Guzzle client
      */
-    private function httpClient()
+    private function httpClient(): \GuzzleHttp\Client
     {
         return new \GuzzleHttp\Client(
             ['headers' =>
@@ -57,7 +57,7 @@ class Generator
      * @param  object $metric The user defined metric object
      * @return void
      */
-    public function fire($metric)
+    public function fire($metric): void
     {
         $data['metrics'][] = $metric;
 
@@ -69,7 +69,7 @@ class Generator
         }
     }
 
-    public function alert($metric)
+    public function alert($metric): void
     {
         $data['metrics'][] = $metric;
 
@@ -87,7 +87,7 @@ class Generator
      * @param  array $metric_array Array of metric objects
      * @return void
      */
-    public function batchFire($metric_array)
+    public function batchFire($metric_array): void
     {
         if (!is_array($metric_array) || count($metric_array) == 0) {
             return;
@@ -114,7 +114,7 @@ class Generator
         }
     }
 
-    private function sendPromise($promises)
+    private function sendPromise($promises): void
     {
         $responses = Promise\Utils::unwrap($promises);
     }

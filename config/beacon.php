@@ -15,7 +15,7 @@ return [
     /**
      * Your API key
      */
-    'api_key'   => '',
+    'api_key'   => env('BEACON_API_KEY', ''),
 
     /**
      * Should batch requests
@@ -34,9 +34,9 @@ return [
      * the built in metrics.
      */
     'system_logging' => [
-        'Lightlogs\Beacon\Jobs\System\CpuMetric',
-        'Lightlogs\Beacon\Jobs\System\HdMetric',
-        'Lightlogs\Beacon\Jobs\System\MemMetric',
+        // 'Lightlogs\Beacon\Jobs\System\CpuMetric',
+        // 'Lightlogs\Beacon\Jobs\System\HdMetric',
+        // 'Lightlogs\Beacon\Jobs\System\MemMetric',
     ],
 
     'database' => [
