@@ -205,8 +205,6 @@ It is possible to use this package with your own custom endpoint for consuming m
 
 ```php
 BEACON_ENDPOINT/METRIC_TYPE/batch
-
-REQUEST TYPE = POST
 ``` 
 
 For example if you wish to send a counter metric the full URL would look like this:
