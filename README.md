@@ -199,21 +199,19 @@ LightLogs::create(new DbQuery($request_method,
                             ->batch();
 ```
 
-## Usage outside of Lightlogs collector
+### Command line options
 
-It is possible to use this package with your own custom endpoint for consuming metrics, the URI path that is constructed follows this pattern
+From the command line you can force send statistics:
 
-```php
-BEACON_ENDPOINT/METRIC_TYPE/batch
-``` 
-
-For example if you wish to send a counter metric the full URL would look like this:
-
-```
-https://endpoint.com/counter/batch
+```bash
+php artisan beacon:force-send
 ```
 
+Or purge statistics from the cache:
 
+```bash
+php artisan beacon:purge
+```
 
 ### Testing
 
