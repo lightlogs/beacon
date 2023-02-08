@@ -1,0 +1,58 @@
+{
+    "name": "lightlogs/beacon",
+    "description": "Application level data collector package for laravel",
+    "keywords": [
+        "php",
+        "APM",
+        "beacon",
+        "laravel",
+        "light logs",
+        "lightlogs"
+    ],
+    "homepage": "https://github.com/lightlogs/beacon",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "David Bomba",
+            "email": "turbo124@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8",
+        "guzzlehttp/guzzle": "^7",
+        "illuminate/support": "^9.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lightlogs\\Beacon\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lightlogs\\Beacon\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lightlogs\\Beacon\\CollectorServiceProvider"
+            ],
+            "aliases": {
+                "Beacon": "Lightlogs\\Beacon\\CollectorFacade"
+            }
+        }
+    }
+}
