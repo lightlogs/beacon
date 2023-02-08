@@ -5,7 +5,6 @@
 
 ![logo](https://user-images.githubusercontent.com/5827962/217441851-3b64f31e-47e8-4661-9e03-23334217dacb.png)
 
-
 This collector implements a native Laravel solution for collecting and sending application statistics. This client is designed to be paired with the Lightlogs collector package which can be installed on any Laravel 9+ installation to ingest the metrics.
 
 Why the need for a collector like this? Collecting application statistics can be very useful to understand how your application is working, detect any hot spots before they cause troubles and also understand how users are interacting (or abusing) your system. For instance you could create a metric to monitor HTTP requests received by your application and use this to manage your resources / provisioning of your infrastructure. This data can then be presented in a graphical display system such as Grafana which enables very detailed time series charts, see the example below:
