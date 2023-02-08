@@ -9,10 +9,12 @@ use Lightlogs\Beacon\Beacon\Generator;
 
 class ConfigTest extends TestCase
 {
-    /** @test */
-	public function testValidInstanceType()
-	{
-		$collector = new Collector;
-		$this->assertTrue($collector instanceof Collector);
-	}
+    /**
+     * @test 
+     */
+    public function testValidInstanceType()
+    {
+        $collector = new Collector;
+        $this->assertTrue($collector instanceof Collector);
+    }
 }

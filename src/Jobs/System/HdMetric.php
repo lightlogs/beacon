@@ -42,7 +42,7 @@ class HdMetric implements ShouldQueue
         $hdd_total = round(disk_total_space("/"), 2);
 
         $hdd_used = $hdd_total - $hdd_free;
-        $hdd_percent = round(sprintf('%.2f',($hdd_used / $hdd_total) * 100), 2);
+        $hdd_percent = round(sprintf('%.2f', ($hdd_used / $hdd_total) * 100), 2);
 
         $metric = new GenericMultiMetric();
         $metric->name = 'system.hd';
@@ -53,7 +53,7 @@ class HdMetric implements ShouldQueue
 
         $collector = new Collector();
         $collector->create($metric)
-        ->batch();
+            ->batch();
     }
 }
 

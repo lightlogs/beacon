@@ -18,17 +18,21 @@ class CollectorServiceProvider extends ServiceProvider
     {
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([
+            $this->publishes(
+                [
                 __DIR__.'/../config/beacon.php' => config_path('beacon.php'),
-            ], 'config');
+                ], 'config'
+            );
 
         }
 
         if ($this->app->runningInConsole()) {
-            $this->commands([
+            $this->commands(
+                [
                 ForceSend::class,
                 PurgeAnalytics::class,
-            ]);
+                ]
+            );
         }
     }
 
@@ -45,17 +49,20 @@ class CollectorServiceProvider extends ServiceProvider
         //     return new Collector;
         // });
 
-        $this->app->bind('collector', function (){
-           return new Collector; 
-        });
+        $this->app->bind(
+            'collector', function () {
+                return new Collector; 
+            }
+        );
 
-        if(config('beacon.enabled'))
-        {
+        if(config('beacon.enabled')) {
             /* Register the scheduler */
-            $this->app->booted(function () {
-                $schedule = app(Schedule::class);
-                $schedule->job(new BatchMetrics())->everyFiveMinutes()->withoutOverlapping()->name('beacon-batch-job')->onOneServer();
-            });
+            $this->app->booted(
+                function () {
+                    $schedule = app(Schedule::class);
+                    $schedule->job(new BatchMetrics())->everyFiveMinutes()->withoutOverlapping()->name('beacon-batch-job')->onOneServer();
+                }
+            );
         }
     }
 }

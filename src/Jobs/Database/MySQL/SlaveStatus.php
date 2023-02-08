@@ -41,8 +41,9 @@ class SlaveStatus implements ShouldQueue
 
         $variables = $this->getSlaveVariables();
 
-        if(!$variables)
+        if(!$variables) {
             return;
+        }
 
         $metric = new GenericMixedMetric();
         $metric->name = 'database.slave_status';
@@ -54,7 +55,7 @@ class SlaveStatus implements ShouldQueue
 
         $collector = new Collector();
         $collector->create($metric)
-        ->batch();
+            ->batch();
 
     }
 

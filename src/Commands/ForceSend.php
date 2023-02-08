@@ -2,7 +2,6 @@
 
 namespace Lightlogs\Beacon\Commands;
 
-use App;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 use Lightlogs\Beacon\Jobs\BatchMetrics;
@@ -32,8 +31,9 @@ class ForceSend extends Command
         {
             $metrics = Cache::get(config('beacon.cache_key') . '_' . $type);
 
-            if(is_array($metrics))
-                $this->logMessage("I have " . count($metrics) . "pending to be sent");
+            if(is_array($metrics)) {
+                $this->logMessage("I have " . count($metrics) . " pending to be sent");
+            }
 
         }
 
@@ -45,15 +45,16 @@ class ForceSend extends Command
         {
             $metrics = Cache::get(config('beacon.cache_key') . '_' . $type);
 
-            if(is_array($metrics))
+            if(is_array($metrics)) {
                 $this->logMessage("I have " . count($metrics) . "pending to be sent");
+            }
         }
 
 
         
     }
 
-    private function logMessage($str)
+    private function logMessage(string $str): void
     {
         $str = date('Y-m-d h:i:s') . ' ' . $str;
         $this->info($str);

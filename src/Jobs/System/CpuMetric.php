@@ -39,10 +39,11 @@ class CpuMetric implements ShouldQueue
     {
         $load = sys_getloadavg();
 
-        if(is_array($load))
+        if(is_array($load)) {
             $cpuload = $load[1]; //5 minute average CPU load represented as a decimal between 0 and 1
-        else
+        } else {
             $cpuload = 0;
+        }
 
         $metric = new GenericGauge();
         $metric->name = 'system.cpu';
@@ -50,6 +51,6 @@ class CpuMetric implements ShouldQueue
 
         $collector = new Collector();
         $collector->create($metric)
-        ->batch();
+            ->batch();
     }
 }

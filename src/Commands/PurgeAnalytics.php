@@ -28,13 +28,13 @@ class PurgeAnalytics extends Command
             
             $metric_types = ['counter', 'gauge', 'multi_metric', 'mixed_metric'];
 
-            foreach($metric_types as $type)
+        foreach($metric_types as $type)
             {
 
-                $this->logMessage("purging {$type}");
+            $this->logMessage("purging {$type}");
 
-                Cache::forget(config('beacon.cache_key') . '_' . $type);
-            }
+            Cache::forget(config('beacon.cache_key') . '_' . $type);
+        }
 
         $this->logMessage('Finished Purging Data');
 

@@ -39,8 +39,9 @@ class NetworkMetric implements ShouldQueue
     {
         $vnstat = popen("vnstat --json", 'r');
 
-        if (is_resource($vnstat)) 
+        if (is_resource($vnstat)) { 
             $stream = '';
+        }
 
 
         while (!feof($vnstat)) {
@@ -66,7 +67,7 @@ class NetworkMetric implements ShouldQueue
 
             $collector = new Collector();
             $collector->create($metric)
-            ->batch();
+                ->batch();
 
 
         }

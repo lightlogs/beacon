@@ -54,6 +54,6 @@ class MemMetric implements ShouldQueue
 
         $collector = new Collector();
         $collector->create($metric)
-        ->batch();
+            ->batch();
     }
 }

@@ -59,7 +59,7 @@ class DbStatus implements ShouldQueue
 
         $collector = (new Collector());
 
-        if($this->force_send || !$db_status){ //if there is no DB connection, then we MUST fire immediately!!
+        if($this->force_send || !$db_status) { //if there is no DB connection, then we MUST fire immediately!!
             (new Collector())->create($metric)->send();
         }
         else{
@@ -68,8 +68,7 @@ class DbStatus implements ShouldQueue
 
         $variables = $this->getSlaveVariables();
 
-        if($variables)
-        {
+        if($variables) {
 
             $metric = new GenericMixedMetric();
             $metric->name = 'database.slave_status.'.$this->db_connection;
@@ -80,14 +79,13 @@ class DbStatus implements ShouldQueue
 
             $collector = new Collector();
             $collector->create($metric)
-            ->batch();
+                ->batch();
 
         }
 
         $status_variables = $this->getVariables();
 
-        if($status_variables)
-        {
+        if($status_variables) {
             $metric = new GenericMultiMetric();
             $metric->name = 'database.performance.'.$this->db_connection;
             $metric->metric1 = $status_variables->Innodb_data_read;
@@ -99,7 +97,7 @@ class DbStatus implements ShouldQueue
             
             $collector = new Collector();
             $collector->create($metric)
-            ->batch();
+                ->batch();
         }
 
     }

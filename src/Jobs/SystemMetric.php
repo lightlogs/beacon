@@ -34,8 +34,9 @@ class SystemMetric implements ShouldQueue
     public function handle()
     {
 
-        foreach(config('beacon.system_logging') as $sys_log)
+        foreach(config('beacon.system_logging') as $sys_log) {
             $sys_log::dispatch();
+        }
 
     }
 }

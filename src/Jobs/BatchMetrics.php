@@ -34,8 +34,9 @@ class BatchMetrics implements ShouldQueue
     public function handle()
     {
 
-        if(!config('beacon.enabled') || empty(config('beacon.api_key')))
+        if(!config('beacon.enabled') || empty(config('beacon.api_key'))) {
             return;
+        }
         
         SystemMetric::dispatch();
         
@@ -45,8 +46,9 @@ class BatchMetrics implements ShouldQueue
         {
             $metrics = Cache::get(config('beacon.cache_key') . '_' . $type);
       
-            if(!is_array($metrics))
+            if(!is_array($metrics)) {
                 continue;
+            }
 
             Cache::put(config('beacon.cache_key') . '_' . $type, []);
             
