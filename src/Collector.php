@@ -8,7 +8,6 @@ use Lightlogs\Beacon\Jobs\CreateMetric;
 
 class Collector
 {
-
     public $metric;
 
     public function __construct()
@@ -48,44 +47,40 @@ class Collector
 
     public function send()
     {
-        
-        if(!config('beacon.enabled') || empty(config('beacon.api_key'))) {
+
+        if (!config('beacon.enabled') || empty(config('beacon.api_key'))) {
             return;
         }
 
         $generator = (new Generator())->fire($this->metric);
-
     }
 
     public function queue()
     {
 
-        if(!config('beacon.enabled') || empty(config('beacon.api_key'))) {
+        if (!config('beacon.enabled') || empty(config('beacon.api_key'))) {
             return;
         }
-        
-        CreateMetric::dispatch($this->metric);
 
+        CreateMetric::dispatch($this->metric);
     }
 
     public function batch()
     {
 
-        if(!config('beacon.enabled') || empty(config('beacon.api_key'))) {
+        if (!config('beacon.enabled') || empty(config('beacon.api_key'))) {
             return;
         }
 
         $data = Cache::get(config('beacon.cache_key') . '_' . $this->metric->type);
 
-        if(is_array($data)) {
+        if (is_array($data)) {
             $data[] = $this->metric;
-        }
-        else {
+        } else {
             $data = [];
             $data[] = $this->metric;
         }
 
         Cache::put(config('beacon.cache_key') . '_' . $this->metric->type, $data);
-
     }
 }

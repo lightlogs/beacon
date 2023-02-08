@@ -4,14 +4,13 @@ namespace Lightlogs\Beacon\ExampleMetric;
 
 class GenericCounter
 {
-
     /**
      * The type of Sample
      *
      * Monotonically incrementing counter
-     * 
+     *
      *     - counter
-     *     
+     *
      * @var string
      */
     public $type = 'counter';
@@ -27,17 +26,16 @@ class GenericCounter
      * The datetime of the counter measurement
      *
      * date("Y-m-d H:i:s")
-     * 
-     * @var DateTime 
+     *
+     * @var DateTime
      */
     public $datetime;
 
     /**
-     * The increment amount... should always be 
+     * The increment amount... should always be
      * set to 0
-     * 
+     *
      * @var integer
      */
     public $metric = 0;
-
 }

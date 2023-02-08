@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 use Lightlogs\Beacon\Collector;
 use Lightlogs\Beacon\Generator;
 use Lightlogs\Beacon\ExampleMetric\GenericGauge;
-use Lightlogs\Beacon\ExampleMetric\GenericMultiMetric; 
+use Lightlogs\Beacon\ExampleMetric\GenericMultiMetric;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -16,11 +16,14 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 class MemMetric implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
 
     public $tries = 1;
-    
+
     /**
      * Create a new job instance.
      *
@@ -47,10 +50,10 @@ class MemMetric implements ShouldQueue
 
         $metric = new GenericMultiMetric();
         $metric->name = 'system.mem';
-        $metric->metric1 = $stat['mem_total']; 
-        $metric->metric2 = $stat['mem_free']; 
-        $metric->metric3 = $stat['mem_free']; 
-        $metric->metric4 = $stat['mem_percent']; 
+        $metric->metric1 = $stat['mem_total'];
+        $metric->metric2 = $stat['mem_free'];
+        $metric->metric3 = $stat['mem_free'];
+        $metric->metric4 = $stat['mem_percent'];
 
         $collector = new Collector();
         $collector->create($metric)

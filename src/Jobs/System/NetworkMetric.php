@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 use Lightlogs\Beacon\Collector;
 use Lightlogs\Beacon\Generator;
 use Lightlogs\Beacon\ExampleMetric\GenericGauge;
-use Lightlogs\Beacon\ExampleMetric\GenericMultiMetric; 
+use Lightlogs\Beacon\ExampleMetric\GenericMultiMetric;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -16,7 +16,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 class NetworkMetric implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public $tries = 1;
 
@@ -39,7 +42,7 @@ class NetworkMetric implements ShouldQueue
     {
         $vnstat = popen("vnstat --json", 'r');
 
-        if (is_resource($vnstat)) { 
+        if (is_resource($vnstat)) {
             $stream = '';
         }
 
@@ -50,28 +53,23 @@ class NetworkMetric implements ShouldQueue
 
         // Close the handle
         pclose($vnstat);
-  
+
         $x = json_decode($stream);
 
-        foreach($x->interfaces as $interface)
-        {
-  
+        foreach ($x->interfaces as $interface) {
             $name = $interface->name;
             $network_metric = end($interface->traffic->fiveminute);
 
             $metric = new GenericMultiMetric();
-            $metric->name = 'network.activity.'.$name;
-            $metric->metric1 = $network_metric->rx; 
-            $metric->metric2 = $network_metric->tx; 
-            // $metric->metric4 = $stat['mem_percent']; 
+            $metric->name = 'network.activity.' . $name;
+            $metric->metric1 = $network_metric->rx;
+            $metric->metric2 = $network_metric->tx;
+            // $metric->metric4 = $stat['mem_percent'];
 
             $collector = new Collector();
             $collector->create($metric)
                 ->batch();
-
-
         }
-
     }
 }
 

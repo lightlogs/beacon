@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 use Lightlogs\Beacon\Collector;
 use Lightlogs\Beacon\Generator;
 use Lightlogs\Beacon\ExampleMetric\GenericMixedMetric;
-use Lightlogs\Beacon\Jobs\Database\Traits\StatusVariables; 
+use Lightlogs\Beacon\Jobs\Database\Traits\StatusVariables;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -16,7 +16,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 class SlaveStatus implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, StatusVariables;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
+    use StatusVariables;
 
     /**
      * Create a new job instance.
@@ -41,23 +45,20 @@ class SlaveStatus implements ShouldQueue
 
         $variables = $this->getSlaveVariables();
 
-        if(!$variables) {
+        if (!$variables) {
             return;
         }
 
         $metric = new GenericMixedMetric();
         $metric->name = 'database.slave_status';
-        $metric->string_metric5 = $variables->Master_Host; 
-        $metric->string_metric6 = $variables->Slave_IO_Running; 
-        $metric->string_metric7 = $variables->Slave_SQL_Running; 
-        $metric->string_metric8 = $variables->Replicate_Do_DB; 
-        $metric->string_metric6 = $variables->Last_Error; 
+        $metric->string_metric5 = $variables->Master_Host;
+        $metric->string_metric6 = $variables->Slave_IO_Running;
+        $metric->string_metric7 = $variables->Slave_SQL_Running;
+        $metric->string_metric8 = $variables->Replicate_Do_DB;
+        $metric->string_metric6 = $variables->Last_Error;
 
         $collector = new Collector();
         $collector->create($metric)
             ->batch();
-
     }
-
-
 }

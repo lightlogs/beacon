@@ -20,10 +20,10 @@ class CollectorServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes(
                 [
-                __DIR__.'/../config/beacon.php' => config_path('beacon.php'),
-                ], 'config'
+                __DIR__ . '/../config/beacon.php' => config_path('beacon.php'),
+                ],
+                'config'
             );
-
         }
 
         if ($this->app->runningInConsole()) {
@@ -42,7 +42,7 @@ class CollectorServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/beacon.php', 'beacon');
+        $this->mergeConfigFrom(__DIR__ . '/../config/beacon.php', 'beacon');
 
         // Register the main class to use with the facade
         // $this->app->singleton('collector', function () {
@@ -50,12 +50,13 @@ class CollectorServiceProvider extends ServiceProvider
         // });
 
         $this->app->bind(
-            'collector', function () {
-                return new Collector; 
+            'collector',
+            function () {
+                return new Collector();
             }
         );
 
-        if(config('beacon.enabled')) {
+        if (config('beacon.enabled')) {
             /* Register the scheduler */
             $this->app->booted(
                 function () {

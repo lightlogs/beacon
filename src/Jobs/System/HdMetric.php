@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 use Lightlogs\Beacon\Collector;
 use Lightlogs\Beacon\Generator;
 use Lightlogs\Beacon\ExampleMetric\GenericGauge;
-use Lightlogs\Beacon\ExampleMetric\GenericMultiMetric; 
+use Lightlogs\Beacon\ExampleMetric\GenericMultiMetric;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -16,7 +16,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 class HdMetric implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public $tries = 1;
 
@@ -37,7 +40,7 @@ class HdMetric implements ShouldQueue
      */
     public function handle()
     {
-        
+
         $hdd_free = round(disk_free_space("/"), 2);
         $hdd_total = round(disk_total_space("/"), 2);
 
@@ -46,14 +49,13 @@ class HdMetric implements ShouldQueue
 
         $metric = new GenericMultiMetric();
         $metric->name = 'system.hd';
-        $metric->metric1 = $hdd_total; 
-        $metric->metric2 = $hdd_free; 
-        $metric->metric3 = $hdd_used; 
-        $metric->metric4 = $hdd_percent; 
+        $metric->metric1 = $hdd_total;
+        $metric->metric2 = $hdd_free;
+        $metric->metric3 = $hdd_used;
+        $metric->metric4 = $hdd_percent;
 
         $collector = new Collector();
         $collector->create($metric)
             ->batch();
     }
 }
-
