@@ -25,20 +25,8 @@ class DbStatus implements ShouldQueue
      *
      * @return void
      */
-
-    private $db_connection;
-
-    private $name;
-    
-    private $force_send;
-
-    public function __construct(string $db_connection, string $name, bool $force_send = false)
+    public function __construct(private string $db_connection, private string $name, private bool $force_send = false)
     {
-        $this->db_connection = $db_connection;
-
-        $this->name = $name;
-
-        $this->force_send = $force_send;
     }
 
     /**
@@ -46,7 +34,7 @@ class DbStatus implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
 
         config(['database.default' => $this->db_connection]);

@@ -33,7 +33,7 @@ class SlaveStatus implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $slave_connection = config('beacon.database.mysql.slave');
 

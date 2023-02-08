@@ -15,9 +15,7 @@ class CreateMetric implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
 
-    public $tries = 3;
-
-    public $backoff = 3600;
+    public $tries = 4;
 
     protected $metric;
 
@@ -30,6 +28,11 @@ class CreateMetric implements ShouldQueue
     public function __construct($metric)
     {
         $this->metric = $metric;
+    }
+
+    public function backoff()
+    {
+        return [5, 60, 240, 3600];
     }
 
     /**
